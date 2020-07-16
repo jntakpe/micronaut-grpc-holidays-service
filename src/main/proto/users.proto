@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+option java_package = "com.github.jntakpe.users";
+option objc_class_prefix = "HLW";
+
+package users;
+
+import "validate/validate.proto";
+
+service UsersService {
+  rpc FindByUsername(UsersByUsernameRequest) returns (UserResponse) {}
+  rpc Create(UserRequest) returns (UserResponse) {}
+}
+
+message UsersByUsernameRequest {
+  string username = 1;
+}
+
+message UserRequest {
+  string username = 1 [(validate.rules).any.required = true, (validate.rules).string.min_len = 3];
+  string email = 2 [(validate.rules).any.required = true, (validate.rules).string.email = true];
+  string first_name = 3;
+  string last_name = 4;
+  string phone_number = 5;
+  string country_code = 6 [(validate.rules).string = {min_len: 2, max_len: 3}];
+}
+
+message UserResponse {
+  string username = 1 [(validate.rules).any.required = true, (validate.rules).string.min_len = 3];
+  string email = 2 [(validate.rules).any.required = true, (validate.rules).string.email = true];
+  string first_name = 3;
+  string last_name = 4;
+  string phone_number = 5;
+  string country_code = 6 [(validate.rules).string = {min_len: 2, max_len: 3}];
+  string id = 15;
+}
