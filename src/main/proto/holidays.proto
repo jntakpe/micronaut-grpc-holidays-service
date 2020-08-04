@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option java_package = "com.github.jntakpe.holidays";
+
+package holidays;
+
+import "validate/validate.proto";
+
+service HolidaysService {
+  rpc Create(HolidaysRequest) returns (HolidaysResponse) {}
+}
+
+message HolidaysRequest {
+  string userId = 1 [(validate.rules).any.required = true, (validate.rules).string.len = 24];
+}
+
+message HolidaysResponse {
+  string userId = 1;
+  repeated string holidays = 2;
+  repeated string bankHolidays = 3;
+}

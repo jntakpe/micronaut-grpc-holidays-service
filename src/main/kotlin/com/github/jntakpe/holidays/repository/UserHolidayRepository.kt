@@ -22,4 +22,6 @@ class UserHolidayRepository(database: MongoDatabase) {
     }
 
     fun findByUserId(userId: String): Mono<UserHoliday> = collection.findOne(UserId eq userId).toMono()
+
+    fun create(userHoliday: UserHoliday): Mono<UserHoliday> = collection.insertOne(userHoliday).toMono().thenReturn(userHoliday)
 }

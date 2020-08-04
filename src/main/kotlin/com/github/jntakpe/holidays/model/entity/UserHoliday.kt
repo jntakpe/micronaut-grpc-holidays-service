@@ -14,6 +14,7 @@ import java.time.LocalDate
 @Serializable
 data class UserHoliday(
     val userId: String,
+    val country: String,
     val holidays: List<@Serializable(LocalDateSerializer::class) LocalDate> = emptyList(),
     @SerialName(DB_ID) @Serializable(ObjectIdSerializer::class) override val id: ObjectId = ObjectId()
 ) : Identifiable
