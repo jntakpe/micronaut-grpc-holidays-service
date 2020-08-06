@@ -1,7 +1,7 @@
 package com.github.jntakpe.holidays.repository
 
-import com.github.jntakpe.holidays.dao.UserHolidayDao
-import com.github.jntakpe.holidays.model.entity.UserHoliday
+import com.github.jntakpe.holidays.dao.HolidayDao
+import com.github.jntakpe.holidays.model.entity.Holiday
 import com.mongodb.MongoWriteException
 import io.micronaut.test.annotation.MicronautTest
 import org.assertj.core.api.Assertions.assertThat
@@ -14,7 +14,7 @@ import reactor.kotlin.test.test
 import java.util.*
 
 @MicronautTest
-internal class UserHolidayRepositoryTest(private val repository: UserHolidayRepository, private val dao: UserHolidayDao) {
+internal class HolidayRepositoryTest(private val repository: HolidayRepository, private val dao: HolidayDao) {
 
 
     @BeforeEach
@@ -23,9 +23,9 @@ internal class UserHolidayRepositoryTest(private val repository: UserHolidayRepo
     }
 
     @ParameterizedTest
-    @ArgumentsSource(UserHolidayDao.PersistedData::class)
-    fun `find by user id should find one`(userHoliday: UserHoliday) {
-        val userId = userHoliday.userId
+    @ArgumentsSource(HolidayDao.PersistedData::class)
+    fun `find by user id should find one`(holiday: Holiday) {
+        val userId = holiday.userId
         repository.findByUserId(userId).test()
             .consumeNextWith { assertThat(it.userId).isEqualTo(userId) }
             .verifyComplete()
@@ -40,12 +40,12 @@ internal class UserHolidayRepositoryTest(private val repository: UserHolidayRepo
     }
 
     @ParameterizedTest
-    @ArgumentsSource(UserHolidayDao.TransientData::class)
-    fun `create should add document`(userHoliday: UserHoliday) {
+    @ArgumentsSource(HolidayDao.TransientData::class)
+    fun `create should add document`(holiday: Holiday) {
         val initSize = dao.count()
-        repository.create(userHoliday).test()
+        repository.create(holiday).test()
             .consumeNextWith {
-                assertThat(it).isEqualTo(userHoliday)
+                assertThat(it).isEqualTo(holiday)
                 assertThat(dao.count()).isNotZero().isEqualTo(initSize + 1)
             }
             .verifyComplete()
@@ -54,7 +54,7 @@ internal class UserHolidayRepositoryTest(private val repository: UserHolidayRepo
     @Test
     fun `create should fail when user id already exists`() {
         val initSize = dao.count()
-        repository.create(UserHoliday(UserHolidayDao.PersistedData.JDOE_ID, Locale.ITALY.country)).test()
+        repository.create(Holiday(HolidayDao.PersistedData.JDOE_ID, Locale.ITALY.country)).test()
             .consumeErrorWith {
                 assertThat(it).isInstanceOf(MongoWriteException::class.java)
                 assertThat(dao.count()).isEqualTo(initSize)

@@ -18,4 +18,5 @@ message HolidaysResponse {
   string userId = 1;
   repeated string holidays = 2;
   repeated string bankHolidays = 3;
+  string id = 15 [(validate.rules).string.len = 24];
 }

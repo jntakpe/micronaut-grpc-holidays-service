@@ -1,6 +1,6 @@
 package com.github.jntakpe.holidays.dao
 
-import com.github.jntakpe.holidays.model.entity.UserHoliday
+import com.github.jntakpe.holidays.model.entity.Holiday
 import com.github.jntakpe.holidays.shared.MongoDao
 import com.github.jntakpe.holidays.shared.TestDataProvider
 import com.mongodb.reactivestreams.client.MongoDatabase
@@ -10,22 +10,22 @@ import java.util.*
 import javax.inject.Singleton
 
 @Singleton
-class UserHolidayDao(database: MongoDatabase) : MongoDao<UserHoliday>(database.getCollection(), PersistedData) {
+class HolidayDao(database: MongoDatabase) : MongoDao<Holiday>(database.getCollection(), PersistedData) {
 
-    object PersistedData : TestDataProvider<UserHoliday> {
+    object PersistedData : TestDataProvider<Holiday> {
         val JDOE_ID = ObjectId().toString()
         val MMOE_ID = ObjectId().toString()
-        val jdoe = UserHoliday(JDOE_ID, Locale.FRANCE.country)
-        val mmoe = UserHoliday(MMOE_ID, Locale.UK.country)
+        val jdoe = Holiday(JDOE_ID, Locale.FRANCE.country)
+        val mmoe = Holiday(MMOE_ID, Locale.UK.country)
 
         override fun data() = listOf(jdoe, mmoe)
     }
 
-    object TransientData : TestDataProvider<UserHoliday> {
+    object TransientData : TestDataProvider<Holiday> {
         val RROE_ID = ObjectId().toString()
         val JSMITH_ID = ObjectId().toString()
-        val rroe = UserHoliday(RROE_ID, Locale.FRANCE.country)
-        val jsmith = UserHoliday(JSMITH_ID, Locale.UK.country)
+        val rroe = Holiday(RROE_ID, Locale.FRANCE.country)
+        val jsmith = Holiday(JSMITH_ID, Locale.UK.country)
 
         override fun data() = listOf(rroe, jsmith)
     }

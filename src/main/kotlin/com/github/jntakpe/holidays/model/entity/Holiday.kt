@@ -12,7 +12,7 @@ import java.time.LocalDate
 
 @Data
 @Serializable
-data class UserHoliday(
+data class Holiday(
     val userId: String,
     val country: String,
     val holidays: List<@Serializable(LocalDateSerializer::class) LocalDate> = emptyList(),

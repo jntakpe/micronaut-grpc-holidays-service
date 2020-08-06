@@ -1,9 +1,9 @@
 package com.github.jntakpe.holidays.dao
 
-import com.github.jntakpe.holidays.dao.UserHolidayDao.PersistedData.JDOE_ID
-import com.github.jntakpe.holidays.dao.UserHolidayDao.PersistedData.MMOE_ID
-import com.github.jntakpe.holidays.dao.UserHolidayDao.TransientData.JSMITH_ID
-import com.github.jntakpe.holidays.dao.UserHolidayDao.TransientData.RROE_ID
+import com.github.jntakpe.holidays.dao.HolidayDao.PersistedData.JDOE_ID
+import com.github.jntakpe.holidays.dao.HolidayDao.PersistedData.MMOE_ID
+import com.github.jntakpe.holidays.dao.HolidayDao.TransientData.JSMITH_ID
+import com.github.jntakpe.holidays.dao.HolidayDao.TransientData.RROE_ID
 import com.github.jntakpe.holidays.shared.GrpcMockService
 import com.github.jntakpe.users.UserResponse
 import com.github.jntakpe.users.Users

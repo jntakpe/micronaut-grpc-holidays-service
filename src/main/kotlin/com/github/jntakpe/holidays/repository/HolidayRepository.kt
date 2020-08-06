@@ -1,7 +1,7 @@
 package com.github.jntakpe.holidays.repository
 
-import com.github.jntakpe.holidays.model.entity.UserHoliday
-import com.github.jntakpe.holidays.model.entity.UserHoliday_.Companion.UserId
+import com.github.jntakpe.holidays.model.entity.Holiday
+import com.github.jntakpe.holidays.model.entity.Holiday_.Companion.UserId
 import com.mongodb.client.model.IndexOptions
 import com.mongodb.client.model.Indexes
 import com.mongodb.reactivestreams.client.MongoDatabase
@@ -13,15 +13,15 @@ import reactor.kotlin.core.publisher.toMono
 import javax.inject.Singleton
 
 @Singleton
-class UserHolidayRepository(database: MongoDatabase) {
+class HolidayRepository(database: MongoDatabase) {
 
-    private val collection = database.getCollection<UserHoliday>()
+    private val collection = database.getCollection<Holiday>()
 
     init {
         collection.createIndex(Indexes.ascending(UserId.name), IndexOptions().unique(true)).toMono().subscribe()
     }
 
-    fun findByUserId(userId: String): Mono<UserHoliday> = collection.findOne(UserId eq userId).toMono()
+    fun findByUserId(userId: String): Mono<Holiday> = collection.findOne(UserId eq userId).toMono()
 
-    fun create(userHoliday: UserHoliday): Mono<UserHoliday> = collection.insertOne(userHoliday).toMono().thenReturn(userHoliday)
+    fun create(holiday: Holiday): Mono<Holiday> = collection.insertOne(holiday).toMono().thenReturn(holiday)
 }
